@@ -1,0 +1,5 @@
+Checking the input and output specifications of the job
+Computing the InputSplits for the job
+Setup the requisite accounting information for the DistributedCache of the job if necessary
+Copying the job's jar and configuration to the map-reduce system directory on the distributed file-system
+Submitting the job to the cluster and optionally monitoring it's status
