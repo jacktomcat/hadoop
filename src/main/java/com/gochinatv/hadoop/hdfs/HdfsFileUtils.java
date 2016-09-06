@@ -31,7 +31,6 @@ public class HdfsFileUtils {
 			FileSystem fs = FileSystem.get(URI.create(hdfsFile), conf);
 			OutputStream out = fs.create(new Path(hdfsFile), new Progressable() {
 				int i=1;
-				@Override
 				public void progress() {
 					System.out.print(i);
 					i++;
