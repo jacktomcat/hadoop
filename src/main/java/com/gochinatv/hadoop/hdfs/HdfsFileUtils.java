@@ -47,6 +47,35 @@ public class HdfsFileUtils {
 		}
 	}
 	
+	/**
+     *
+     * @param content   上传的内容
+     * @param hdfsFile  上传的hdfs文件路径   (hdfs://slave01/user/hdfs/ga_location/20161209.txt)
+     */
+    public static void upload(String content, String hdfsFile) {
+        try {
+            Configuration configuration = new Configuration();
+            FileSystem hdfs = FileSystem.get(URI.create(hdfsFile), configuration );
+            Path file = new Path(hdfsFile);
+            if ( hdfs.exists( file )) { hdfs.delete(file, true ); }
+            OutputStream out = hdfs.create(file, new Progressable() {
+                int i=1;
+                public void progress() {
+                    //System.out.print(i);
+                    i++;
+                }
+            });
+
+            BufferedWriter br = new BufferedWriter( new OutputStreamWriter(out,"UTF-8"));
+            br.write(content);
+            br.close();
+            hdfs.close();
+        } catch (IOException e) {
+            System.out.println("*****数据上传至HDFS出错*****");
+            e.printStackTrace();
+        }
+    }
+	
 	
 	/**
 	 * Copy FileSystem files to local files.
